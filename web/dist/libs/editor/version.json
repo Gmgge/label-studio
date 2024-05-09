@@ -1,6 +1,6 @@
 {
-  "message": "fix: OPTIC-712: Remove warnings in the app related to injection occur before observer",
-  "commit": "9f1d0c707d44c452b223704aa11417b2ba3c039e",
-  "date": "2024-05-03T17:03:19.000Z",
-  "branch": "fb-optic-712/remove-warnings"
+  "message": "Merge branch 'develop' into fb-dia-989/hotkeys-stuck",
+  "commit": "cb6e68bc71dc0063679c60ac7d0ced52c1efd53a",
+  "date": "2024-05-08T20:42:38.000Z",
+  "branch": "fb-dia-989/hotkeys-stuck"
 }
