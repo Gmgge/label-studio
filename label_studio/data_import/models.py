@@ -90,6 +90,12 @@ class FileUpload(models.Model):
         tasks = [{'data': {settings.DATA_UNDEFINED_NAME: line}} for line in lines]
         return tasks
 
+    def read_tasks_one_from_txt(self):
+        logger.debug('Read tasks one from text file {}'.format(self.file.name))
+        content = self.content
+        tasks = [{'data': {settings.DATA_UNDEFINED_NAME: content}}]
+        return tasks
+
     def read_tasks_list_from_json(self):
         logger.debug('Read tasks list from JSON file {}'.format(self.file.name))
 
@@ -136,8 +142,11 @@ class FileUpload(models.Model):
                 tasks = self.read_tasks_list_from_csv()
             elif file_format == '.tsv' and file_as_tasks_list:
                 tasks = self.read_tasks_list_from_tsv()
-            elif file_format == '.txt' and file_as_tasks_list:
-                tasks = self.read_tasks_list_from_txt()
+            elif file_format == '.txt':
+                if file_as_tasks_list:
+                    tasks = self.read_tasks_list_from_txt()
+                else:
+                    tasks = self.read_tasks_one_from_txt()
             elif file_format == '.json':
                 tasks = self.read_tasks_list_from_json()
 
