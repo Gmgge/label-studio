@@ -247,7 +247,7 @@ class DataManagerTaskSerializer(TaskSerializer):
 
         result = getattr(task, field)
         if isinstance(result, str):
-            output = result
+            output = result.encode('utf-8').decode('unicode-escape')
             if unique:
                 output = list(set(output.split(',')))
                 output = ','.join(output)
