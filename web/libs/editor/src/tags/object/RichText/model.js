@@ -105,12 +105,14 @@ const Model = types
       return self.isLoaded && self._isReady;
     },
 
+    // we are displaying label for either data-label OR data-index
     get styles() {
       return `
       .htx-highlight {
         cursor: pointer;
         border: 1px dashed transparent;
       }
+      .htx-highlight[data-index]::after,
       .htx-highlight[data-label]::after {
         padding: 2px 2px;
         font-size: 9.5px;
@@ -119,6 +121,9 @@ const Model = types
         vertical-align: super;
         content: attr(data-label);
         line-height: 0;
+      }
+      .htx-highlight[data-index]:not([data-label])::after {
+        content: attr(data-index);
       }
       .htx-highlight.${STATE_CLASS_MODS.highlighted} {
         position: relative;
@@ -177,6 +182,13 @@ const Model = types
         if (self.visibleNodeRef.current && isFF(FF_LSDV_4620_3)) {
           domManager = new DomManager(self.visibleNodeRef.current);
         }
+      },
+
+      onDispose() {
+        self.regs.forEach((region) => {
+          // remove all spans from the visible node, because without cleaning them, the regions won't be updated
+          region.clearSpans();
+        });
       },
 
       updateValue: flow(function* (store) {
